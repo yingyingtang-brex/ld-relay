@@ -554,6 +554,7 @@ func createFeatureStore(c Config, envConfig *EnvConfig, loggers ldlog.Loggers) (
 		if tableName == "" {
 			return nil, errors.New("TableName property must be specified for DynamoDB, either globally or per environment")
 		}
+		loggers.Infof("testing logging in relay")
 		loggers.Infof("Using DynamoDB feature store: %s with prefix: %s", tableName, envConfig.Prefix)
 		options := []lddynamodb.FeatureStoreOption{
 			lddynamodb.Prefix(envConfig.Prefix),
