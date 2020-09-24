@@ -115,6 +115,7 @@ func parsePath(path string) (parsedPath, error) {
 // Otherwise, the client initialization method may time out but we will still be retrying in the background, and
 // if we succeed then the client can detect that we're initialized now by calling our Initialized method.
 func (sp *streamProcessor) consumeStream(stream *es.Stream, closeWhenReady chan<- struct{}) {
+	sp.config.Loggers.Infof("consumeStream")
 	// Consume remaining Events and Errors so we can garbage collect
 	defer func() {
 		for range stream.Events {
@@ -158,7 +159,7 @@ func (sp *streamProcessor) consumeStream(stream *es.Stream, closeWhenReady chan<
 
 			switch event.Event() {
 			case putEvent:
-				sp.config.Loggers.Debugf("put event")
+				sp.config.Loggers.Infof("put event")
 				var put putData
 				if err := json.Unmarshal([]byte(event.Data()), &put); err != nil {
 					gotMalformedEvent(event, err)
@@ -172,7 +173,7 @@ func (sp *streamProcessor) consumeStream(stream *es.Stream, closeWhenReady chan<
 				}
 
 			case patchEvent:
-				sp.config.Loggers.Debugf("patch event")
+				sp.config.Loggers.Infof("patch event")
 				var patch patchData
 				if err := json.Unmarshal([]byte(event.Data()), &patch); err != nil {
 					gotMalformedEvent(event, err)

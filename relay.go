@@ -480,6 +480,7 @@ func newClientContext(envName string, envConfig *EnvConfig, c Config, clientFact
 			logging.GlobalLoggers.Errorf("Ignoring error initializing LaunchDarkly client for %s: %+v\n", envName, err)
 		} else {
 			logging.GlobalLoggers.Infof("Initialized LaunchDarkly client for %s\n", envName)
+			logging.GlobalLoggers.Infof("tesing logging =====")
 		}
 		if readyCh != nil {
 			readyCh <- clientContext
