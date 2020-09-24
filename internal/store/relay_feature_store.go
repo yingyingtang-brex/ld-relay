@@ -137,6 +137,7 @@ func (relay *SSERelayFeatureStore) Upsert(kind ld.VersionedDataKind, item ld.Ver
 	}
 
 	if newItem != nil {
+		relay.loggers.Debugf(`allPublisher publish event with: %s (version %d)`, newItem.GetKey(), newItem.GetVersion())
 		relay.allPublisher.Publish(relay.keys(), makeUpsertEvent(kind, newItem))
 		if kind == ld.Features {
 			relay.flagsPublisher.Publish(relay.keys(), makeFlagsUpsertEvent(newItem))

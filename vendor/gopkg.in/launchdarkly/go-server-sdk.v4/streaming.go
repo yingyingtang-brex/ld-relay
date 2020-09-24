@@ -158,6 +158,7 @@ func (sp *streamProcessor) consumeStream(stream *es.Stream, closeWhenReady chan<
 
 			switch event.Event() {
 			case putEvent:
+				sp.config.Loggers.Debugf("put event")
 				var put putData
 				if err := json.Unmarshal([]byte(event.Data()), &put); err != nil {
 					gotMalformedEvent(event, err)
@@ -171,6 +172,7 @@ func (sp *streamProcessor) consumeStream(stream *es.Stream, closeWhenReady chan<
 				}
 
 			case patchEvent:
+				sp.config.Loggers.Debugf("patch event")
 				var patch patchData
 				if err := json.Unmarshal([]byte(event.Data()), &patch); err != nil {
 					gotMalformedEvent(event, err)
